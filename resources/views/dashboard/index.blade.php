@@ -1,12 +1,10 @@
 @extends('layouts.dashboard')
 
-@props(['heading'])
-
 @section('content')
 
-{{--<x-app>--}}
+{{--<x-dashboard>--}}
         <!-- Main content -->
-        <div class="content">
+
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-6">
@@ -71,11 +69,9 @@
                 </div>
                 <!-- /.row -->
             </div><!-- /.container-fluid -->
-        </div>
         <!-- /.content -->
-    </div>
     <!-- /.content-wrapper -->
-{{--</x-app>--}}
+{{--</x-dashboard>--}}
 
 @endsection
 

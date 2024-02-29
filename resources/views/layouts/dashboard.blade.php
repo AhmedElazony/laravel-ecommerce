@@ -170,7 +170,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="index3.html" class="brand-link">
+            <a href="{{ route('dashboard.index') }}" class="brand-link">
                 <img src="/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
                     style="opacity: .8">
                 <span class="brand-text font-weight-light">{{ config('app.name') }}</span>
@@ -205,7 +205,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </div>
                     </div>
                 </div>
-                    @include('layouts.partials.sidebar')
+                @include('layouts.partials.sidebar')
             </div>
             <!-- /.sidebar -->
         </aside>
@@ -216,21 +216,24 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">{{ $heading }}</h1>
+                            <h1 class="m-0">@yield('title')</h1>
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 @section('breadcrumb')
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                @endsection
+                                    <li class="breadcrumb-item"><a href="{{ route('dashboard.index') }}">Dashboard</a>
+                                    </li>
+                                @show
                             </ol>
                         </div><!-- /.col -->
                     </div><!-- /.row -->
                 </div><!-- /.container-fluid -->
             </div>
-            <!-- /.content-header -->
-        @yield('content')
-
+            <div class="content">
+                @yield('content')
+            </div>
+        </div>
+        <!-- /.content-header -->
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark">
             <!-- Control sidebar content goes here -->
@@ -248,7 +251,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 Anything you want
             </div>
             <!-- Default to the left -->
-            <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">{{ config('app.url') }}.io</a>.</strong> All rights
+            <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">{{ config('app.url') }}.io</a>.</strong>
+            All rights
             reserved.
         </footer>
     </div>
