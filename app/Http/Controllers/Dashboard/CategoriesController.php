@@ -70,7 +70,7 @@ class CategoriesController extends Controller
                 ->with('warning', 'Category Not Found!');
         }
 
-        $parents = Category::filterParents($id);
+        $parents = Category::filterParents($id)->get();
 
         return view('dashboard.categories.edit', [
             'category' => $category,
