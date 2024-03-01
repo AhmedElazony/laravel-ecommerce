@@ -11,13 +11,13 @@ class Category extends Model
 
     protected $guarded = [];
 
-    public function scopeFilterParents($query, $id)
+    public function scopeFilterParents($query, $categoryId)
     {
         // SELECT * FROM categories WHERE id <> :id
         // AND (parent_id <> :id OR parent_id IS NULL)
-        return $query->where('id', '<>', $id)
-            ->where(function ($query) use ($id) {
-                $query->where('parent_id', '<>', $id)
+        return $query->where('id', '<>', $categoryId)
+            ->where(function ($query) use ($categoryId) {
+                $query->where('parent_id', '<>', $categoryId)
                     ->OrWhereNULL('parent_id');
             });
     }
