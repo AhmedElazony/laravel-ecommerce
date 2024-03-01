@@ -70,14 +70,7 @@ class CategoriesController extends Controller
                 ->with('warning', 'Category Not Found!');
         }
 
-        // SELECT * FROM categories WHERE id <> :id
-        // AND (parent_id <> :id OR parent_id IS NULL)
-        $parents = Category::where('id', '<>', $id)
-            ->where(function ($query) use ($id) {
-                $query->where('parent_id', '<>', $id)
-                    ->OrWhereNULL('parent_id');
-            })
-            ->get();
+        $parents = Category::filterParents($id);
 
         return view('dashboard.categories.edit', [
             'category' => $category,
