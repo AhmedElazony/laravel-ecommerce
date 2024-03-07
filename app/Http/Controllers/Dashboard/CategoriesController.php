@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class CategoriesController extends Controller
 {
@@ -40,7 +41,18 @@ class CategoriesController extends Controller
             'slug' => Str::slug($request->post('name'))
         ]);
 
-        Category::create($request->all());
+        $data = $request->except('image');
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $imagePath = $file->store('images', [
+                'disk' => 'public'
+            ]);
+
+            $data['image'] = $imagePath;
+        }
+
+        Category::create($data);
 
         return redirect()->route('dashboard.categories.index')
             ->with('success', 'Category Has Been Added!');
@@ -84,8 +96,24 @@ class CategoriesController extends Controller
     public function update(Request $request, string $id)
     {
         $category = Category::findOrFail($id); // findOrFail returns 404 if $id is not found.
+        $oldImage = $category->image;
 
-        $category->update($request->all());
+        $data = $request->except('image');
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $imagePath = $file->store('images', [
+                'disk' => 'public'
+            ]);
+
+            $data['image'] = $imagePath;
+        }
+
+        $category->update($data);
+
+        if ($oldImage && $data['image']) {
+            Storage::disk('public')->delete($oldImage);
+        }
 
         return redirect()->route('dashboard.categories.index')
             ->with('success', 'Category Has Been Updated!');
@@ -96,9 +124,13 @@ class CategoriesController extends Controller
      */
     public function destroy(string $id)
     {
-        $category = Category::find($id);
+        $category = Category::findOrFail($id);
 
         $category->delete();
+
+        if ($category->image) {
+            Storage::disk('public')->delete($category->image);
+        }
 
         return redirect()->back()->with('success', 'The Category ' . $category->name . ' Has Been Deleted!');
     }

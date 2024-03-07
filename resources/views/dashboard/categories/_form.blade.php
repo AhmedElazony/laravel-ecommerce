@@ -22,20 +22,22 @@
 
 <div class="form-group">
     <label for="image">Image</label>
-    <input type="file" name="image" class=" form-control" value="{{ $category->image ?? old('image') }}">
+    <input type="file" name="image" class="form-control" value="{{ $category->image ?? old('image') }}">
+    @if ($category->image ?? false)
+        <img src="{{ asset('storage/' . $category->image) }}" height="200" />
+    @endif
 </div>
 
 <div class="form-group">
     <label for="status">Status</label>
     <div>
         <div class="form-check">
-            <input type="radio" class="form-check-input" name="status" value="Active"
-                @checked(($category->status ?? null) === 'active')> {{-- {{ $category->status === 'active' ? 'checked' : '' }} --}}
+            <input type="radio" class="form-check-input" name="status" value="Active" @checked(($category->status ?? null) === 'active')>
+            {{-- {{ $category->status === 'active' ? 'checked' : '' }} --}}
             <label class="form-check-label" for="status">Active</label>
         </div>
         <div class="form-check">
-            <input type="radio" name="status" class="form-check-input" value="Archived"
-                @checked(($category->status ?? null) === 'archived')>
+            <input type="radio" name="status" class="form-check-input" value="Archived" @checked(($category->status ?? null) === 'archived')>
             <label class="form-check-label" for="status">Archived</label>
         </div>
     </div>

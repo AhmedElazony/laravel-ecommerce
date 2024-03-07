@@ -11,7 +11,7 @@
 @endsection
 
 @section('content')
-    <form action="{{ route('dashboard.categories.update', $category->id) }}" method="POST">
+    <form action="{{ route('dashboard.categories.update', $category->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         @include('dashboard.categories._form')

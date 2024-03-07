@@ -44,7 +44,7 @@
         <tbody>
             @forelse($categories as $category)
                 <tr>
-                    <td></td>
+                    <td><img src="{{ asset('storage/' . $category->image) }}" height="30" width="30"></td>
                     <td>{{ $category->id }}</td>
                     <td>{{ $category->name }}</td>
                     <td class="{{ $category->status === 'active' ? 'text-success' : 'text-danger' }}">
