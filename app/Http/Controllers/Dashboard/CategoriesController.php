@@ -42,15 +42,7 @@ class CategoriesController extends Controller
         ]);
 
         $data = $request->except('image');
-
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $imagePath = $file->store('images', [
-                'disk' => 'public'
-            ]);
-
-            $data['image'] = $imagePath;
-        }
+        $data['image'] = $this->uploadImage($request->image);
 
         Category::create($data);
 
@@ -99,15 +91,7 @@ class CategoriesController extends Controller
         $oldImage = $category->image;
 
         $data = $request->except('image');
-
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $imagePath = $file->store('images', [
-                'disk' => 'public'
-            ]);
-
-            $data['image'] = $imagePath;
-        }
+        $data['image'] = $category->uploadImage($request->image);
 
         $category->update($data);
 
