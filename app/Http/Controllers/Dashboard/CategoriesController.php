@@ -91,7 +91,7 @@ class CategoriesController extends Controller
         $oldImage = $category->image;
 
         $data = $request->except('image');
-        $data['image'] = $category->uploadImage($request->image);
+        $data['image'] = $this->uploadImage($request->image);
 
         $category->update($data);
 
@@ -117,5 +117,19 @@ class CategoriesController extends Controller
         }
 
         return redirect()->back()->with('success', 'The Category ' . $category->name . ' Has Been Deleted!');
+    }
+
+    protected function uploadImage($image)
+    {
+        if (!$image) {
+            return null;
+        }
+
+        $file = request()->file('image');
+        $imagePath = $file->store('images', [
+            'disk' => 'public'
+        ]);
+
+        return $imagePath;
     }
 }
