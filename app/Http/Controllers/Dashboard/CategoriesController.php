@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Requests\CategoryRequest;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
@@ -33,16 +34,13 @@ class CategoriesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        // TODO: Validate Data
+        // $data = $request->validate(Category::validationRules());
+        $data = $request->validated();
+        $data['slug'] = Str::slug($request->post('name'));
 
-        $request->merge([
-            'slug' => Str::slug($request->post('name'))
-        ]);
-
-        $data = $request->except('image');
-        $data['image'] = $this->uploadImage($request->image);
+        $data['image'] = $this->uploadImage($request->file('image'));
 
         Category::create($data);
 
@@ -85,17 +83,20 @@ class CategoriesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CategoryRequest $request, string $id)
     {
+        // $data = $request->validate(Category::validationRules($id));
+
         $category = Category::findOrFail($id); // findOrFail returns 404 if $id is not found.
-        $oldImage = $category->image;
 
         $data = $request->except('image');
-        $data['image'] = $this->uploadImage($request->image);
+        $oldImage = $category->image;
+        $newImage = $this->uploadImage($request->file('image'));
+        $data['image'] = $newImage ?? $oldImage;
 
         $category->update($data);
 
-        if ($oldImage && $data['image']) {
+        if ($oldImage && $newImage) {
             Storage::disk('public')->delete($oldImage);
         }
 
@@ -119,14 +120,13 @@ class CategoriesController extends Controller
         return redirect()->back()->with('success', 'The Category ' . $category->name . ' Has Been Deleted!');
     }
 
-    protected function uploadImage($image)
+    protected function uploadImage($imageRequest)
     {
-        if (!$image) {
+        if (!$imageRequest) {
             return null;
         }
 
-        $file = request()->file('image');
-        $imagePath = $file->store('images', [
+        $imagePath = $imageRequest->store('images', [
             'disk' => 'public'
         ]);
 

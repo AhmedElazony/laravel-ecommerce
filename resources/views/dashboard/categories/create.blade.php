@@ -1,4 +1,4 @@
-@props(['categories'])
+@props(['parents'])
 
 @extends('layouts.dashboard')
 
