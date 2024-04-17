@@ -51,7 +51,7 @@
                     <td>{{ $category->name }}</td>
                     <td class="{{ $category->status === 'active' ? 'text-success' : 'text-danger' }}">
                         {{ ucfirst($category->status) }}</td>
-                    <td>{{ $category->parent_id }}</td>
+                    <td>{{ $category->parent_name }}</td>
                     <td>{{ $category->created_at->diffForHumans() }}</td>
                     <td>
                         <a href="{{ route('dashboard.categories.edit', $category->id) }}"
