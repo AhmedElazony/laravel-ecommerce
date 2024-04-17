@@ -24,7 +24,7 @@ class Category extends Model
             });
     }
 
-    public static function validationRules($id = 0)
+    public static function validationRules($id = 0): array
     {
         return [
             'name' => ['required', 'string', 'min:7', 'max:255', Rule::unique('categories', 'name')->ignore($id), 'filter:php,laravel,html'],
