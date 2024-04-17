@@ -17,17 +17,19 @@
         </a>
     </div>
 
-    @if (session()->has('success'))
-        <div class="alert alert-default-success">
-            {{ session('success') }}
-        </div>
-    @endif
+    <x-alert type="success" />
+    <x-alert type="warning" />
 
-    @if (session()->has('warning'))
-        <div class="alert alert-default-warning">
-            {{ session('warning') }}
-        </div>
-    @endif
+    <form action="{{ URL::current() }}" method="GET" class="d-flex justify-content-between mb-4">
+        <x-form.input name="name" placeholder="Search For Category by Name" class="mx-2" :value="request('name')"/>
+        <select name="status" class="form-control">
+            <option value="">All</option>
+            <option value="active" @selected(request('status') == 'active')>Active</option>
+            <option value="archived" @selected(request('status') == 'archived')>Archived</option>
+        </select>
+        <button type="submit" class="btn btn-dark mx-2 w-25">Filter</button>
+        <a href="{{route('dashboard.categories.index')}}" class="btn btn-primary w-25">Rest Filter</a>
+    </form>
 
     <table class="table">
         <thead>
@@ -72,5 +74,5 @@
             @endforelse
         </tbody>
     </table>
-
+    {{ $categories->withQueryString()->links() }}
 @endsection

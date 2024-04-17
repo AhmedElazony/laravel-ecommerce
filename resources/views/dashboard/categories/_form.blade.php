@@ -1,14 +1,12 @@
 <div class="form-group">
-    <label for="name">Category Name</label>
-    <input type="text" name="name" @class(['form-control', 'is-invalid' => $errors->has('name')]) value="{{ $category->name ?? old('name') }}" />
-    @error('name')
-        <p class="invalid-feedback">{{ $message }}</p>
-    @enderror
+    <x-form.input-label for="name">Category Name</x-form.input-label>
+    <x-form.input type="text" name="name" :old-value="$category->name ?? null" />
+    <x-form.input-error name="name" />
 </div>
 
 <div class="form-group">
-    <label for="parent-id">Parent Category</label>
-    <select name="parent_id" id="" @class([
+    <x-form.input-label for="parent-id">Parent Category</x-form.input-label>
+    <select name="parent_id" id="parent_id" @class([
         'form-control',
         'form-select',
         'is-invalid' => $errors->has('parent_id'),
@@ -20,49 +18,30 @@
             </option>
         @endforeach
     </select>
-    @error('parent_id')
-        <p class="invalid-feedback">{{ $message }}</p>
-    @enderror
+    <x-form.input-error name="parent_id" />
 </div>
 
 <div class="form-group">
-    <label for="description">Description</label>
-    <textarea name="description"
-        @class(['form-control', 'is-invalid' => $errors->has('description')])>{{ $category->description ?? old('description') }}</textarea>
-    @error('description')
-        <p class="invalid-feedback">{{ $message }}</p>
-    @enderror
+    <x-form.input-label for="description">Description</x-form.input-label>
+    <x-form.textarea name="description" :old-value="$category->description ?? null" />
+    <x-form.input-error name="description" />
 </div>
 
 <div class="form-group">
-    <label for="image">Image</label>
-    <input type="file" name="image" @class(['form-control', 'is-invalid' => $errors->has('image')]) value="{{ $category->image ?? old('image') }}">
+    <x-form.input-label for="image">Image</x-form.input-label>
+    <x-form.input type="file" name="image" :old-value="$category->image ?? old('image')" />
     @if ($category->image ?? false)
-        <img src="{{ asset('storage/' . $category->image) }}" height="200" />
+        <img src="{{ asset('storage/' . $category->image) }}" height="200"  alt=""/>
     @endif
-    @error('image')
-        <p class="invalid-feedback">{{ $message }}</p>
-    @enderror
+    <x-form.input-error name="image" />
 </div>
 
 <div class="form-group">
-    <label for="status">Status</label>
+    <x-form.input-label for="status">Status</x-form.input-label>
     <div>
-        <div class="form-check">
-            <input type="radio" @class(['form-check-input', 'is-invalid' => $errors->has('status')]) name="status" value="active"
-                @checked($category->status ?? old('status') === 'active')>
-            {{-- {{ $category->status === 'active' ? 'checked' : '' }} --}}
-            <label class="form-check-label" for="status">Active</label>
-        </div>
-        <div class="form-check">
-            <input type="radio" name="status" @class(['form-check-input', 'is-invalid' => $errors->has('status')]) value="archived"
-                @checked($category->status ?? old('status') === 'archived')>
-            <label class="form-check-label" for="status">Archived</label>
-        </div>
+        <x-form.input-radio name="status" :old-value="$category->status ?? null" :options="['active', 'archived']" />
     </div>
-    @error('status')
-        <p class="invalid-feedback">{{ $message }}</p>
-    @enderror
+    <x-form.input-error name="status" />
 </div>
 
 <div class="form-group">
