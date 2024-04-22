@@ -9,7 +9,10 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductsController extends Controller
 {
-    
+    use SoftDeletesActions;
+
+    protected string $model = Product::class;
+    protected string $modelObjects = "products";
 
     public function index()
     {
