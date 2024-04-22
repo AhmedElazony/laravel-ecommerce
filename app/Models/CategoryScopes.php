@@ -6,17 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 trait CategoryScopes
 {
-
-    public function scopeSearch(Builder $query, array $filters): void
-    {
-        $query->when($filters['name'] ?? false, function ($query, $value) {
-            $query->where('name', 'LIKE', "%{$value}%");
-        });
-
-        $query->when($filters['status'] ?? false, function ($query, $value) {
-            $query->where('status', '=', $value);
-        });
-    }
+    use Scopes;
 
     public function scopeFilterParents($query, $categoryId)
     {
@@ -33,10 +23,5 @@ trait CategoryScopes
     {
         return $query->leftJoin('categories as parent', 'parent.id', '=', 'categories.parent_id')
             ->select(['categories.*', 'parent.name as parent_name']);
-    }
-
-    public function scopeStatus(Builder $query, string $status): Builder
-    {
-        return $query->where('status', '=', $status);
     }
 }
