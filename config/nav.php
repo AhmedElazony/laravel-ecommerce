@@ -14,19 +14,14 @@ return [
             ],
             [
                 'icon' => 'far fa-circle nav-icon',
-                'route' => 'dashboard.categories.create',
-                'title' => 'Create Category'
-            ],
-            [
-                'icon' => 'far fa-circle nav-icon',
                 'route' => 'dashboard.categories.index',
                 'title' => 'Categories',
             ],
             [
                 'icon' => 'far fa-circle nav-icon',
-                'route' => null,
+                'route' => 'dashboard.products.index',
                 'title' => 'Products',
-                'badge' => 'Soon'
+                'badge' => 'New'
             ],
         ]
     ],

@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\CategoriesController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\ProductsController;
+use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->prefix('/dashboard')->as('dashboard.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('index');
@@ -17,4 +18,15 @@ Route::middleware('auth')->prefix('/dashboard')->as('dashboard.')->group(functio
         ->name('categories.forceDelete');
 
     Route::resource('/categories', CategoriesController::class);
+
+    Route::get('/products/trash', [ProductsController::class, 'trash'])
+        ->name('products.trash');
+
+    Route::put('/products/{product}/restore', [ProductsController::class, 'restore'])
+        ->name('products.restore');
+
+    Route::delete('/products/{product}/forceDelete', [ProductsController::class, 'forceDelete'])
+        ->name('products.forceDelete');
+
+    Route::resource('/products', ProductsController::class);
 });

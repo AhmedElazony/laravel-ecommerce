@@ -6,7 +6,8 @@
 
 @section('breadcrumb')
     @parent
-    <li class="breadcrumb-item categories">Categories</li>
+    <li class="breadcrumb-item categories"><a href="{{ route('dashboard.categories.index') }}">Categories</a></li>
+    <li class="breadcrumb-item categories">Trash</li>
 @endsection
 
 @section('content')
