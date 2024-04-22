@@ -12,12 +12,8 @@
 @section('content')
 
     <div class="mb-3">
-        <a href="{{ route('dashboard.categories.create') }}" class="btn btn-outline-primary btn-sm">
-            Create Category
-        </a>
-
-        <a href="{{ route('dashboard.categories.trash') }}" class="btn btn-outline-primary btn-sm ml-2">
-            Go To Trash
+        <a href="{{ route('dashboard.categories.index') }}" class="btn btn-outline-primary btn-sm ml-2">
+            Go Back
         </a>
     </div>
 
@@ -58,21 +54,24 @@
                     <td>{{ $category->parent_name }}</td>
                     <td>{{ $category->created_at->diffForHumans() }}</td>
                     <td>
-                        <a href="{{ route('dashboard.categories.edit', $category->id) }}"
-                            class="btn btn-sm btn-outline-success">Edit</a>
+                        <form action="{{ route('dashboard.categories.restore', $category->id) }}" method="POST">
+                            @method('PUT')
+                            @csrf
+                            <button type="submit" class="btn btn-sm btn-outline-success">Restore</button>
+                        </form>
                     </td>
                     <td>
-                        <form action="{{ route('dashboard.categories.destroy', $category->id) }}" method="POST">
+                        <form action="{{ route('dashboard.categories.forceDelete', $category->id) }}" method="post">
                             @method('DELETE')
                             @csrf
-                            <button type="submit" class="btn btn-sm btn-outline-danger">Move To Trash</button>
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Delete Permanently</button>
                         </form>
                     </td>
                 </tr>
             @empty
                 <tr>
                     <td colspan="7" class="font-weight-bold">
-                        No Categories Defined!
+                        Trash is Empty!
                     </td>
                 </tr>
             @endforelse

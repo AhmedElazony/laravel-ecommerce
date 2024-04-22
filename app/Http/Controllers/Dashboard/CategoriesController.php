@@ -119,11 +119,41 @@ class CategoriesController extends Controller
 
         $category->delete();
 
+//        if ($category->image) {
+//            Storage::disk('public')->delete($category->image);
+//        }
+
+        return redirect()->back()
+            ->with('warning', "The Category '{$category->name}' Has Been Moved To Trash!");
+    }
+
+    public function trash()
+    {
+        return view('dashboard.categories.trash', [
+            'categories' => Category::onlyTrashed()->paginate()
+        ]);
+    }
+
+    public function restore(Request $request, string $id)
+    {
+        $category = Category::onlyTrashed()->findOrFail($id);
+        $category->restore();
+
+        return redirect()->route('dashboard.categories.trash')
+            ->with('success', 'Category Has Been Restored!');
+    }
+
+    public function forceDelete(Request $request, string $id)
+    {
+        $category = Category::onlyTrashed()->findOrFail($id);
+        $category->forceDelete();
+
         if ($category->image) {
             Storage::disk('public')->delete($category->image);
         }
 
-        return redirect()->back()->with('success', 'The Category ' . $category->name . ' Has Been Deleted!');
+        return redirect()->route('dashboard.categories.trash')
+            ->with('warning', "the '{$category->name}' Category Has Been Deleted!");
     }
 
     protected function uploadImage($imageRequest)
