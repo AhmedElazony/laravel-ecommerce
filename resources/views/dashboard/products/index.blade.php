@@ -42,6 +42,7 @@
             <th></th>
             <th>ID</th>
             <th>Name</th>
+            <th>Store</th>
             <th>Status</th>
             <th>price</th>
             <th>Rating</th>
@@ -56,6 +57,7 @@
                 <td><img src="{{ asset('storage/' . $product->image) }}" height="30" width="30"></td>
                 <td>{{ $product->id }}</td>
                 <td>{{ $product->name }}</td>
+                <td>{{ $product->store_id }}</td>
                 <td class="{{ $product->status === 'active' ? 'text-success' : 'text-danger' }}">
                     {{ ucfirst($product->status) }}</td>
                 <td>{{ $product->price }}</td>

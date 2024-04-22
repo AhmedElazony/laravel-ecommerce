@@ -20,4 +20,35 @@ class ProductsController extends Controller
             'products' => Product::paginate()
         ]);
     }
+
+    public function create()
+    {
+        // TODO
+    }
+
+    public function store(Request $request, Product $product)
+    {
+        // TODO
+    }
+
+    public function show(Request $request, Product $product)
+    {
+
+
+    }
+
+    public function edit(Request $request, Product $product)
+    {
+        // TODO
+    }
+
+    public function update(Request $request, Product $product)
+    {
+        // TODO
+    }
+
+    public function destroy(Request $request, Product $product)
+    {
+        // TODO
+    }
 }
