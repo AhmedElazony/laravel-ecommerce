@@ -9,16 +9,16 @@ trait Scopes
     public function scopeSearch(Builder $query, array $filters): void
     {
         $query->when($filters['name'] ?? false, function ($query, $value) {
-            $query->where('name', 'LIKE', "%{$value}%");
+            $query->where("{$this->table}.name", 'LIKE', "%{$value}%");
         });
 
         $query->when($filters['status'] ?? false, function ($query, $value) {
-            $query->where('status', '=', $value);
+            $query->where("{$this->table}.status", '=', $value);
         });
     }
 
     public function scopeStatus(Builder $query, string $status): Builder
     {
-        return $query->where('status', '=', $status);
+        return $query->where("{$this->table}.status", '=', $status);
     }
 }

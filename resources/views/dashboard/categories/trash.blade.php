@@ -62,7 +62,7 @@
                         </form>
                     </td>
                     <td>
-                        <form action="{{ route('dashboard.categories.forceDelete', $category->id) }}" method="post">
+                        <form action="{{ route('dashboard.categories.forceDelete', $category->id) }}" method="POST">
                             @method('DELETE')
                             @csrf
                             <button type="submit" class="btn btn-sm btn-outline-danger">Delete Permanently</button>

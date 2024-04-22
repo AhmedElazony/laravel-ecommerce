@@ -11,4 +11,5 @@ class Product extends Model
     use HasFactory, SoftDeletes, Scopes;
 
     protected $guarded = [];
+    protected $table = 'products';
 }

@@ -11,7 +11,6 @@ class Category extends Model
     use HasFactory, ValidateCategoryRequest, CategoryScopes, SoftDeletes;
 
     protected $guarded = [];
-
-
+    protected $table = 'categories';
 
 }

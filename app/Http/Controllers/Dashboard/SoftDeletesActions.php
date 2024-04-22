@@ -2,12 +2,8 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Controller;
-use App\Models\Product;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 trait SoftDeletesActions
 {
@@ -29,7 +25,7 @@ trait SoftDeletesActions
 
     public function forceDelete(Request $request, string $id)
     {
-        $object = Product::onlyTrashed()->findOrFail($id);
+        $object = $this->model::onlyTrashed()->findOrFail($id);
         $object->forceDelete();
 
         if ($object->image) {
@@ -37,6 +33,6 @@ trait SoftDeletesActions
         }
 
         return redirect()->route("dashboard.{$this->modelObjects}.trash")
-            ->with('warning', class_basename($this->model).' Has Been Restored!');
+            ->with('warning', class_basename($this->model).' Has Been Deleted!');
     }
 }
