@@ -16,8 +16,15 @@ class ProductsController extends Controller
 
     public function index()
     {
+        // Eager Loading.
+        $products = Product::with(['category', 'store'])->paginate();
+        // this will make these queries, and will solve N + 1 problem.
+        // 1. SELECT * FROM products
+        // 2. SELECT * FROM categories WHERE id IN ([category_ids returned from the first query])
+        // 3. SELECT * FROM stores WHERE id IN ([store_ids returned from the first query])
+
         return view('dashboard.products.index', [
-            'products' => Product::paginate()
+            'products' => $products
         ]);
     }
 

@@ -22,10 +22,13 @@ class CategoriesController extends Controller
     public function index()
     {
         // Filter Search Results.
-        $categories = Category::withParentName()
+        $categories = Category::with('parent')
             ->search(request()->query())
+//            ->select('categories.*')
+//            ->selectRaw('(SELECT COUNT(*) FROM products WHERE category_id = categories.id) AS products_count')
+            ->withCount('products')
             ->latest()
-            ->paginate(4);
+            ->paginate(7);
 
         return view('dashboard.categories.index', [
             'categories' => $categories
@@ -62,12 +65,11 @@ class CategoriesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Category $category)
     {
-        $category = Category::findOrFail($id);
-
         return view('dashboard.categories.show', [
-            'category' => $category
+            'category' => $category,
+            'products' => $category->products()->with('store')->paginate(7)
         ]);
     }
 

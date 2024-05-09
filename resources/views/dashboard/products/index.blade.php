@@ -57,12 +57,12 @@
                 <td><img src="{{ asset('storage/' . $product->image) }}" height="30" width="30"></td>
                 <td>{{ $product->id }}</td>
                 <td>{{ $product->name }}</td>
-                <td>{{ $product->store_id }}</td>
+                <td>{{ $product->store->name }}</td>
                 <td class="{{ $product->status === 'active' ? 'text-success' : 'text-danger' }}">
                     {{ ucfirst($product->status) }}</td>
                 <td>{{ $product->price }}</td>
                 <td>{{ $product->rating }}</td>
-                <td>{{ $product->category_id }}</td>
+                <td>{{ $product->category->name }}</td>
                 <td>{{ $product->created_at->diffForHumans() }}</td>
                 <td>
                     <a href="{{ route('dashboard.products.edit', $product->id) }}"

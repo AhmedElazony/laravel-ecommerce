@@ -43,6 +43,7 @@
                 <th>Name</th>
                 <th>Status</th>
                 <th>Parent</th>
+                <th>products count</th>
                 <th>Created At</th>
                 <th></th>
             </tr>
@@ -52,10 +53,15 @@
                 <tr>
                     <td><img src="{{ asset('storage/' . $category->image) }}" height="30" width="30"></td>
                     <td>{{ $category->id }}</td>
-                    <td>{{ $category->name }}</td>
+                    <td>
+                        <a href="{{ route('dashboard.categories.show', $category->id) }}">
+                            {{ $category->name }}
+                        </a>
+                    </td>
                     <td class="{{ $category->status === 'active' ? 'text-success' : 'text-danger' }}">
                         {{ ucfirst($category->status) }}</td>
-                    <td>{{ $category->parent_name }}</td>
+                    <td>{{ $category->parent->name }}</td>
+                    <td>{{ $category->products_count }}</td>
                     <td>{{ $category->created_at->diffForHumans() }}</td>
                     <td>
                         <a href="{{ route('dashboard.categories.edit', $category->id) }}"
