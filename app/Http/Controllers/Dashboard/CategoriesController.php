@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 
 class CategoriesController extends Controller
 {
-    use SoftDeletesActions;
+    use SoftDeletesActions, UploadImage;
 
     protected string $model = Category::class;
     protected string $modelObjects = "categories";
@@ -128,18 +128,5 @@ class CategoriesController extends Controller
 
         return redirect()->back()
             ->with('warning', "The Category '{$category->name}' Has Been Moved To Trash!");
-    }
-
-    protected function uploadImage($imageRequest)
-    {
-        if (!$imageRequest) {
-            return null;
-        }
-
-        $imagePath = $imageRequest->store('images', [
-            'disk' => 'public'
-        ]);
-
-        return $imagePath;
     }
 }

@@ -56,7 +56,7 @@
             <tr>
                 <td><img src="{{ asset('storage/' . $product->image) }}" height="30" width="30"></td>
                 <td>{{ $product->id }}</td>
-                <td>{{ $product->name }}</td>
+                <td><a href="{{ route('dashboard.products.show', $product->id) }}">{{ $product->name }}</a></td>
                 <td>{{ $product->store->name }}</td>
                 <td class="{{ $product->status === 'active' ? 'text-success' : 'text-danger' }}">
                     {{ ucfirst($product->status) }}</td>

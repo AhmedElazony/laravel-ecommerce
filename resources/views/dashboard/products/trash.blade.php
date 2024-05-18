@@ -60,8 +60,11 @@
                 <td>{{ $product->category_id }}</td>
                 <td>{{ $product->created_at->diffForHumans() }}</td>
                 <td>
-                    <a href="{{ route('dashboard.products.restore', $product->id) }}"
-                       class="btn btn-sm btn-outline-success">Restore</a>
+                    <form action="{{ route('dashboard.products.restore', $product->id) }}" method="POST">
+                        @method('PUT')
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-outline-success">Restore</button>
+                    </form>
                 </td>
                 <td>
                     <form action="{{ route('dashboard.products.forceDelete', $product->id) }}" method="POST">

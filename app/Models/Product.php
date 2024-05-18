@@ -6,6 +6,7 @@ use App\Models\Scopes\storeScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
@@ -15,7 +16,7 @@ class Product extends Model
     protected $guarded = [];
     protected $table = 'products';
 
-    protected static function booted()
+    protected static function booted(): void
     {
         static::addGlobalScope('storeId', new StoreScope());
     }
@@ -28,5 +29,16 @@ class Product extends Model
     public function store() : BelongsTo
     {
         return $this->belongsTo(Store::class, 'store_id', 'id');
+    }
+
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class,
+            'product_tag',
+            'product_id',
+            'tag_id',
+            'id',
+            'id'
+        );
     }
 }
