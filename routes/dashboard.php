@@ -3,6 +3,7 @@
 use App\Http\Controllers\Dashboard\CategoriesController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\ProductsController;
+use App\Http\Controllers\Dashboard\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->prefix('/dashboard')->as('dashboard.')->group(function () {
@@ -29,4 +30,8 @@ Route::middleware('auth')->prefix('/dashboard')->as('dashboard.')->group(functio
         ->name('products.forceDelete');
 
     Route::resource('/products', ProductsController::class);
+
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 });

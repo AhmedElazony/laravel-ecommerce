@@ -1,7 +1,5 @@
 <div class="form-group">
-    <x-form.input-label for="name">Category Name</x-form.input-label>
-    <x-form.input type="text" name="name" :old-value="$category->name ?? null" />
-    <x-form.input-error name="name" />
+    <x-form.input type="text" name="name" label="Category Name" :old-value="$category->name ?? null" />
 </div>
 
 <div class="form-group">
@@ -19,29 +17,25 @@
         @endforeach
     </select>
     <x-form.input-error name="parent_id" />
+
+{{--    <x-form.select name="parent_id" :items="$parents" label="Parent Category" :old-value="$category->parent_id" /> --}}
 </div>
 
 <div class="form-group">
-    <x-form.input-label for="description">Description</x-form.input-label>
-    <x-form.textarea name="description" :old-value="$category->description ?? null" />
-    <x-form.input-error name="description" />
+    <x-form.textarea name="description" label="Description" :old-value="$category->description ?? null" />
 </div>
 
 <div class="form-group">
-    <x-form.input-label for="image">Image</x-form.input-label>
-    <x-form.input type="file" name="image" :old-value="$category->image ?? old('image')" />
+    <x-form.input type="file" name="image" label="Image" :old-value="$category->image ?? old('image')" />
     @if ($category->image ?? false)
         <img src="{{ asset('storage/' . $category->image) }}" height="200"  alt=""/>
     @endif
-    <x-form.input-error name="image" />
 </div>
 
 <div class="form-group">
-    <x-form.input-label for="status">Status</x-form.input-label>
     <div>
-        <x-form.input-radio name="status" :old-value="$category->status ?? null" :options="['active', 'archived']" />
+        <x-form.input-radio name="status" label="Status" :old-value="$category->status ?? null" :options="['active', 'archived']" />
     </div>
-    <x-form.input-error name="status" />
 </div>
 
 <div class="form-group">
