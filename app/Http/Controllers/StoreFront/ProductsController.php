@@ -1,0 +1,23 @@
+<?php
+
+namespace App\Http\Controllers\StoreFront;
+
+use App\Http\Controllers\Controller;
+use App\Models\Product;
+use Illuminate\Http\Request;
+
+class ProductsController extends Controller
+{
+    public function index()
+    {
+        return view('store-front.products.index');
+    }
+
+    public function show(Product $product)
+    {
+        if ($product->status !== 'active')
+            abort(404);
+
+        return view('store-front.products.show', compact('product'));
+    }
+}
