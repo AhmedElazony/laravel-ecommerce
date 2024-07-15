@@ -6,7 +6,7 @@ use App\Http\Controllers\Dashboard\ProductsController;
 use App\Http\Controllers\Dashboard\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('auth')->prefix('/dashboard')->as('dashboard.')->group(function () {
+Route::middleware(['auth', 'auth.type:super-admin,admin'])->prefix('/dashboard')->as('dashboard.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('index');
 
     Route::get('/categories/trash', [CategoriesController::class, 'trash'])
